@@ -80,8 +80,6 @@ Please wait until the end of a section
 
 <hr>
 
-. . .
-
 ::: {.columns}
 ::: {.column}
 
