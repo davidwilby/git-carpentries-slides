@@ -1,0 +1,529 @@
+---
+title: "Version Control with `Git`"
+format:
+    revealjs:
+        theme: [serif]
+        slide-number: true
+        show-slide-number: speaker
+        chalkboard: true
+        code-line-numbers: false
+        preview-links: auto
+author: "**Dr David Wilby** (he/him)<br>[**davidwilby.dev**](https://davidwilby.dev)<br>Digital Innovation Team<br>British Antarctic Survey"
+date: 04/09/2024
+date-format: "ddd Do MMMM YYYY"
+footer: "these slides: [davidwilby.dev/git-carpentries-slides](https://davidwilby.dev/git-carpentries-slides) - {{< fa brands github >}} [improve this talk!](https://github.com/davidwilby/git-carpentries-slides)"
+from: markdown+emoji
+---
+
+## Welcome! {.smaller}
+
+. . .
+
+::: {.columns}
+
+::: {.column}
+
+### Schedule
+
+9am: intro and start
+
+10.30: coffee break
+
+12.30?: lunch
+
+2.30: coffee break
+
+4pm: finish
+
+:::
+
+::: {.column}
+
+::: {.fragment}
+### Format
+
+* A little talking
+* Mostly live coding & practical exercises
+
+Course material: <https://carpentries-incubator.github.io/git-novice-branch-pr/>{target="_blank"}
+
+:::
+
+:::
+
+:::
+
+
+
+## Get help!
+
+### "Quick" or urgent questions
+
+**In-person**: :raised_hand: in real life
+
+**Remote**: :raised_hand: on zoom
+
+<br>
+
+### Bigger questions
+Please wait until the end of a section
+
+
+
+
+## Icebreaker {.smaller}
+
+* What's your name?
+* Introduce yourself
+* Why are you here today?
+* Who's your favourite cartoon/book/film character?
+
+<hr>
+
+. . .
+
+::: {.columns}
+::: {.column}
+
+::: {.incremental}
+* David :wave:
+* Research Software Engineer (previously physics/sensory biology)
+* I :heart: teaching git! :nerd_face:
+:::
+
+:::
+::: {.column}
+
+::: {.fragment}
+![](assets/images/milhouse.jpg){height=250}
+:::
+:::
+:::
+
+
+---
+
+![<font size=2><a href="https://www.phdcomics.com/" target="_blank">Piled Higher and Deeper by Jorge Cham</a></font>](assets/images/phd_comics_doc.gif){fig-align="center" height=700}
+
+## What is version control?
+
+<br>
+
+* :camera_flash: Snapshot current version
+* :label: Name specific versions
+* :leftwards_arrow_with_hook: Revert back to a particular version
+
+<br>
+
+Perhaps
+
+* :books: Compare and merge versions
+
+
+## Benefits of version control
+
+
+. . .
+
+local :computer:
+
+* Protect against breaking *everything*
+* Keep at least one working version of the code
+* Snapshot your progress
+
+. . .
+
+remote/distributed :globe_with_meridians:
+
+* Work collaboratively
+* Share code easily
+* Remote backup
+
+
+## Without version control
+
+<br>
+
+. . .
+
+:confused: Make changes by making a copy of the entire codebase.
+
+<br>
+
+. . . 
+
+:neutral_face: Merging is a manual process.
+
+<br>
+
+. . .
+
+:fearful: Lose track of which version contains what functionality.
+
+<br>
+
+. . .
+
+:sob: Collaborating is just emailing zip files and crying.
+
+<br>
+
+# Version Control == Git
+
+. . .
+
+More often than not
+
+## How does Git work?{.smaller}
+```{mermaid}
+%%| mermaid-format: png
+%%| fig-width: 10
+%%{init: { 'logLevel': 'debug', 'theme': 'base', 'gitGraph': {'showCommitLabel': true, 'rotateCommitLabel': true}} }%%
+gitGraph
+    commit id: "commit 1"
+    commit id: "commit 2"
+    commit id: "commit 3"
+    commit id: "commit 4"
+    commit id: "commit 5"
+    commit id: "commit 6"
+    commit id: "commit 7"
+```
+
+::: {.callout-note appearance="simple"}
+
+The most important concept in git is the `commit` - the name given to a unit of changes, and also to the process of making a commit.
+
+:::
+
+<br>
+
+. . .
+
+### Commits contain *changes*
+
+Not actually *snapshots* of a file.
+
+But can recreate a state from a sequence of changes.
+
+
+## Demo
+
+<https://onlywei.github.io/explain-git-with-d3>{target="_blank"}
+
+or
+
+<https://bit.ly/git-sandbox>{target="_blank"}
+
+or
+
+
+{{< qrcode https://onlywei.github.io/explain-git-with-d3 width=350 height=350 >}}
+
+
+# :stop_sign: `git` setup
+
+<https://carpentries-incubator.github.io/git-novice-branch-pr/02-setup/>{target="_blank"}
+
+## Repositories (Repos)
+
+<br>
+
+::: {.callout-tip appearance="simple"}
+
+<font size="6">Once a directory/folder is *initialised* with `git` it becomes a *repository*.</font>
+
+<br><br>
+
+:::
+
+::: columns
+
+::: {.column width="40%"}
+**directory**
+```
+.
+├── src/
+├── LICENSE.md
+└── README.md
+```
+:::
+
+::: {.column width="20%"}
+
+`git init`
+------->
+
+:::
+
+::: {.column width="40%"}
+
+**repository**
+```
+.
+├── .git/
+├── src/
+├── LICENSE.md
+└── README.md
+```
+
+:::
+
+:::
+
+## Making a commit {{< fa solid code-commit >}}
+
+```{mermaid}
+%%| mermaid-format: png
+%%| fig-height: 6
+flowchart TB
+    A(fa:fa-pen fa:fa-file-code Edit file) --> B
+    B(fa:fa-download Save) --> C
+    C(fa:fa-plus <strong>Stage</strong> changes) --> D(fa:fa-check Commit)
+```
+
+## The commit hash{.smaller}
+
+<br>
+
+Git generates a hash string, uniquely identifying each commit.
+
+::: {.callout-note appearance="simple"}
+
+Git uses a "[Merkle tree](https://en.wikipedia.org/wiki/Merkle_tree)" under the hood. (Don't ask me how it works, I have no idea :shrug:)
+
+:::
+
+. . .
+
+<br>
+
+Hashes look like:
+
+`d3dd03f493707256c8528bc83ad280a460f05a56`
+
+. . .
+
+<br>
+
+But are most often seen as the first 7 characters, as this is easier to read/type and is normally enough to identify the commit.
+
+`d3dd03f`
+
+
+## The commit message{.smaller}
+
+Each commit has a *message* associated with it.
+
+<br>
+
+**Summary/Title**: <50-72 characters
+
+Displayed most frequently.
+
+<br>
+
+**Detailed description**: no character limit.
+
+*Can* be used to capture more detail. Not used that often.
+
+. . .
+
+### This commit will...
+
+::: columns
+
+::: {.column width="30%"}
+
+* :x: some stuff
+* :x: code
+* :x: updates
+
+:::
+
+::: {.column width="70%"}
+
+* :heavy_check_mark: add new module "renderers"
+* :heavy_check_mark: update README with new install instructions
+* :heavy_check_mark: fix bug #17 with package update
+
+:::
+
+:::
+
+
+
+## Branches  {{< fa solid code-branch >}}
+
+Used to work on new features/changes/additions to the code.
+
+```{mermaid}
+%%| mermaid-format: png
+%%| fig-width: 7
+%%{init: { 'logLevel': 'debug', 'theme': 'base'} }%%
+gitGraph
+    commit id:"8bc2520"
+    commit id:"2a70480"
+    branch experiment
+    commit id:"089e06b"
+    commit id:"bec84f4"
+    commit id:"2420edd"
+```
+
+```bash
+git branch experiment
+git checkout experiment
+git commit
+git commit
+git commit
+```
+
+::: {.callout-tip appearance="simple"}
+
+**Checkout**: switching to a different branch.
+
+:::
+
+
+## Merging  {{< fa solid code-merge >}}
+
+Combine changes from two branches.
+
+```{mermaid}
+%%| mermaid-format: png
+%%| fig-width: 10
+%%{init: { 'logLevel': 'debug', 'theme': 'base'} }%%
+gitGraph
+    commit id:"8bc2520"
+    commit id:"2a70480"
+    branch experiment
+    commit id:"089e06b"
+    commit id:"bec84f4"
+    commit id:"2420edd"
+    checkout main
+    merge experiment
+    commit id:"60489ec"
+```
+
+```bash
+git checkout main
+git merge experiment
+git commit
+```
+
+## How to interact with Git{.smaller}
+
+### command line `git`  {{< fa brands git-alt >}}
+via unix shell (or gitbash/WSL on Windows)
+
+```bash
+$ git add README.md
+$ git commit -m 'initial commit'
+$ git status
+```
+
+<br>
+
+::: columns
+
+::: {.column width="50%"}
+
+### IDEs
+* [VSCode](https://code.visualstudio.com/)
+* [RStudio](https://posit.co/download/rstudio-desktop/)
+* [PyCharm](https://www.jetbrains.com/pycharm/)
+* [Emacs](https://www.gnu.org/software/emacs/)
+
+:::
+
+::: {.column width="50%"}
+
+### Other GUIs
+* [GitKraken Client {{< fa brands gitkraken >}}](https://www.gitkraken.com/)
+* [GitHub Desktop {{< fa brands github >}}](https://desktop.github.com/)
+* [etc. etc.](https://git-scm.com/downloads/guis/)
+
+
+:::
+
+:::
+
+## Git learning resources{.smaller}
+
+::: columns
+
+::: {.column width="60%"}
+
+* [Pro Git Book](http://git-scm.com/book/en/v2)
+* [Software carpentry lesson](http://swcarpentry.github.io/git-novice/)
+* *\"oh sh\*\* git\"* - [zine](https://wizardzines.com/zines/oh-shit-git/), or [blog](https://ohshitgit.com/)
+* [The Turing Way](https://the-turing-way.netlify.app/reproducible-research/vcs.html)
+* [stack overflow](https://stackoverflow.com/) *etc.* - *use carefully* :warning:
+* blogs on [dev](https://dev.to/) or [atlassian](https://www.atlassian.com/git/tutorials) *etc.*
+
+<br>
+
+::: {.callout-warning appearance="simple"}
+<font size="6">
+**Remember**
+
+Learning Git is a process.
+
+Everyone makes mistakes.
+</font>
+:::
+
+
+:::
+
+::: {.column width="40%"}
+[![](assets/images/ohshitgit.png)](https://ohshitgit.com/)
+:::
+
+:::
+
+## Git {{< fa brands git-alt >}} vs GitHub {{< fa brands github >}} or GitLab {{< fa brands gitlab >}}{.smaller}
+
+<br>
+
+**Git**
+
+* Local client for source code management
+* Interacting with remote git servers
+
+**GitHub/GitLab**
+
+* Code hosting
+* Collaboration
+* OSS contribution
+* Project management
+* Automated workflows/continuous delivery
+
+
+## Repositories
+
+![](assets/images/talk_repo_screenshot.png)
+
+## Issues
+
+![](assets/images/github_issues_screenshot.png)
+
+## Projects/Kanban Board
+
+![](assets/images/github_projects_screenshot.png)
+
+
+## Continuous integration/Automated testing
+
+![](assets/images/githubactions_screenshot.png){fig-align="center"}
+
+
+## Great resources{.smaller}
+
+[![](assets/images/bes_reproducible_code.jpg)](https://www.britishecologicalsociety.org/wp-content/uploads/2019/06/BES-Guide-Reproducible-Code-2019.pdf)
+[![](assets/images/turing_way.jpg){width="40%"}](https://the-turing-way.netlify.app/)
+
+* [BES Guide to Reproducible Research Code](https://www.britishecologicalsociety.org/wp-content/uploads/2019/06/BES-Guide-Reproducible-Code-2019.pdf)
+* [The Turing Way](https://the-turing-way.netlify.app/)
+* [Software Sustainability Institute](https://software.ac.uk/)
+* [This talk!](https://github.com/davidwilby/git-carpentries-slides)
+
