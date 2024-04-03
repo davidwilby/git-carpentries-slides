@@ -8,7 +8,7 @@ format:
         chalkboard: true
         code-line-numbers: false
         preview-links: auto
-author: "**Dr David Wilby** (he/him)<br>[**davidwilby.dev**](https://davidwilby.dev)<br>Digital Innovation Team<br>British Antarctic Survey"
+author: "David Wilby, Harrison Abbot, Kinzie Orton, James Byrne<br>British Antarctic Survey"
 date: 04/09/2024
 date-format: "ddd Do MMMM YYYY"
 footer: "these slides: [davidwilby.dev/git-carpentries-slides](https://davidwilby.dev/git-carpentries-slides) - {{< fa brands github >}} [improve this talk!](https://github.com/davidwilby/git-carpentries-slides)"
@@ -25,15 +25,19 @@ from: markdown+emoji
 
 ### Schedule
 
-9am: intro and start
+9-11.30: Intro and setup (David)
 
-10.30: coffee break
+11.30-11.45: break :coffee:
 
-12.30?: lunch
+11.45-12.30: Live coding exercises (Harrison)
 
-2.30: coffee break
+12.30-13.30: lunch :sandwich:
 
-4pm: finish
+13.30-15:00: Live coding exercises (Kinzie)
+
+15.00-15.15: break :coffee:
+
+15.15-16.30: Final exercises & discussion (James)
 
 :::
 
