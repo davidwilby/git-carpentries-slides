@@ -102,6 +102,9 @@ Please wait until the end of a section
 :::
 :::
 
+# :stop_sign: `git` setup
+
+<https://carpentries-incubator.github.io/git-novice-branch-pr/02-setup/>{target="_blank"}
 
 ---
 
@@ -221,10 +224,6 @@ or
 
 {{< qrcode https://onlywei.github.io/explain-git-with-d3 width=350 height=350 >}}
 
-
-# :stop_sign: `git` setup
-
-<https://carpentries-incubator.github.io/git-novice-branch-pr/02-setup/>{target="_blank"}
 
 ## Repositories (Repos)
 
